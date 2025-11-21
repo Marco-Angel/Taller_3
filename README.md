@@ -136,6 +136,12 @@ En esta imagen se muestra cómo, tras compilar nuevamente la imagen Docker del j
 
 La imagen muestra los logs del contenedor que ejecuta Minikube dentro de Docker Desktop, donde se observa el arranque de varios servicios esenciales como Podman, el contenedor del runtime, la API de Podman y el motor de Docker Application Container Engine. También se ve cómo Minikube completa su proceso de inicialización, habilita servicios de seguridad y llega a los objetivos del sistema necesarios para ejecutar contenedores, confirmando que el entorno está funcionando correctamente dentro del clúster local.
 
+### Paso 6
+
+<img width="630" height="600" alt="image" src="https://github.com/user-attachments/assets/315f7cf8-436e-4fd3-957d-4f055139b0f8" />
+
+La imagen muestra la interfaz moderna de un juego multijugador desplegado en Kubernetes, donde se indica claramente el nombre del pod que está atendiendo la sesión (juego-deployment-56758674ff-kxq8h). La pantalla reporta 2 jugadores conectados, permitiendo además unirse mediante el botón “Conectar como Jugador”, destacado en un estilo visual degradado. En la parte inferior, se listan los jugadores activos dentro de este mismo pod, específicamente Jugador-1 y Jugador-2. El diseño general utiliza colores suaves y elementos visuales llamativos, transmitiendo una experiencia ordenada, amigable e intuitiva para el usuario.
+
 
 
 
