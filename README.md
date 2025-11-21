@@ -6,7 +6,7 @@
 ---
 ### Item 1
 
-¿Qué es Kubernetes?
+#### ¿Qué es Kubernetes?
 
 Kubernetes, también conocido como K8s, es una plataforma de orquestación de contenedores que automatiza el despliegue, la administración, la escalabilidad y la operación del ciclo de vida de aplicaciones en contenedores.
 Fue creado por Google a partir de su experiencia administrando cargas masivas y hoy es un proyecto de código abierto administrado por la Cloud Native Computing Foundation (CNCF).
@@ -59,3 +59,12 @@ Hightower, K., Burns, B., & Beda, J. (2017). Kubernetes: Up and Running. O’Rei
 Red Hat. (2023). Kubernetes basics. https://www.redhat.com/en/topics/containers/what-is-kubernetes
 
 The Linux Foundation. (2022). Introduction to Kubernetes. https://www.linuxfoundation.org
+
+---
+### Item 2
+
+**¿Compo crear contenedores?**
+Desde visual studio code  se crea un folder, en este caso para demostrar el folder se llamara **Ejemplo-Docker**, despeus de hacer lo anterior se selecciona en la parte de arriva **new file**.
+En la siguiente imagen se evidencia la creacion de tres archivos donde a cada uno se le hizo el desarrollo de codigo para poder ejecutar el objetivo de este item que es crear contenedores desde docker, ya que la demostración que se desarrollo se basa en conectar jugadores.
+<img width="677" height="261" alt="image" src="https://github.com/user-attachments/assets/14e7df77-031f-4148-9c8e-ff890663eefd" />
+
