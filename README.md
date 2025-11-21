@@ -61,7 +61,7 @@ Red Hat. (2023). Kubernetes basics. https://www.redhat.com/en/topics/containers/
 The Linux Foundation. (2022). Introduction to Kubernetes. https://www.linuxfoundation.org
 
 ---
-### Item 2
+## Item 2
 
 **¿Compo crear contenedores?**
 
@@ -99,6 +99,12 @@ La interfaz muestra un juego multijugador en funcionamiento, donde se destaca el
 
 El contenedor test-juego muestra que el servidor del juego inició correctamente en el puerto 3000 y que el pod activo es b56c3c74633f. En los registros se observa que tres jugadores (Jugador-1, Jugador-2 y Jugador-3) se conectaron exitosamente al pod, incrementando el conteo total de jugadores de 1 a 3 conforme cada uno ingresó. Esto confirma que el sistema multijugador está funcionando, registrando y actualizando correctamente las conexiones en tiempo real dentro del mismo pod.
 
+---
+## Item 3
+
+En este ultimo item que completa la este tercer punto, se dejo el mismo folder perose crearon dos archivos que son **k8s-deployment.yaml** y **k8s-service.yaml**
+para asi poder crear el servicio y crear el deployment en kubernete.
+<img width="668" height="215" alt="image" src="https://github.com/user-attachments/assets/66831d41-6eeb-4c8a-a7a8-a54ea53b8916" />
 
 
 
