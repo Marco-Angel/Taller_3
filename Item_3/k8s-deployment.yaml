@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: juego-deployment
+  labels:
+    app: juego
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: juego
+  template:
+    metadata:
+      labels:
+        app: juego
+    spec:
+      containers:
+      - name: servidor-juego
+        image: juego-multijugador:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
