@@ -70,6 +70,7 @@ The Linux Foundation. (2022). Introduction to Kubernetes. https://www.linuxfound
 
 Desde visual studio code  se crea un folder, en este caso para demostrar el folder se llamara **Ejemplo-Docker**, despeus de hacer lo anterior se selecciona en la parte de arriva **new file**.
 En la siguiente imagen se evidencia la creacion de tres archivos donde a cada uno se le hizo el desarrollo de codigo que se comparte en los archivos de este repositorio para poder ejecutar el objetivo de este item que es crear contenedores desde docker.
+
 <img width="677" height="261" alt="image" src="https://github.com/user-attachments/assets/14e7df77-031f-4148-9c8e-ff890663eefd" />
 
 ### Paso 2
