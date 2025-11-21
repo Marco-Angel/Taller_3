@@ -102,10 +102,39 @@ El contenedor test-juego muestra que el servidor del juego inició correctamente
 ---
 ## Item 3
 
+### Paso 1
+
 En este ultimo item que completa la este tercer punto, se dejo el mismo folder perose crearon dos archivos que son **k8s-deployment.yaml** y **k8s-service.yaml**
 para asi poder crear el servicio y crear el deployment en kubernete.
+
 <img width="668" height="215" alt="image" src="https://github.com/user-attachments/assets/66831d41-6eeb-4c8a-a7a8-a54ea53b8916" />
 
+### Paso 2
+
+<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/19b49fad-83f5-4c07-8e19-d4accb6fe253" />
+
+La imagen muestra el proceso de instalación y configuración de Minikube en Windows usando PowerShell.
+Primero se crea el directorio C:\minikube, luego se descarga el archivo minikube.exe desde GitHub usando Invoke-WebRequest. Después se agrega la ruta C:\minikube a la variable de entorno PATH. Finalmente, se verifica la instalación ejecutando:
+minikube version → muestra v1.37.0 instalada correctamente.
+kubectl version --client → muestra la versión del cliente kubectl (v1.34.1).
+
+### Paso 3
+
+<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/918dd694-a14d-4c26-b045-2802ab21e6d0" />
+
+En la imagen se muestra que ejecutaste **minikube start** y el proceso inició correctamente el clúster local de Kubernetes usando Docker como driver. Se descargaron las imágenes necesarias, se configuró la red interna y se habilitaron los addons por defecto. Luego, al ejecutar minikube status, se confirma que todos los componentes principales están funcionando: el control plane, el kubelet, el apiserver y kubeconfig. En resumen, la imagen evidencia que tu entorno de Kubernetes con Minikube quedó instalado y ejecutándose sin problemas.
+
+### Paso 4
+
+<img width="900" height="611" alt="image" src="https://github.com/user-attachments/assets/db63fb19-5194-4d9c-a04b-4883b260eec9" />
+
+En esta imagen se muestra cómo, tras compilar nuevamente la imagen Docker del juego multijugador dentro del entorno de Minikube, se aplican los archivos de configuración k8s-deployment.yaml y k8s-service.yaml para desplegar el contenedor en Kubernetes. Finalmente, se ejecuta el comando minikube service juego-service --url para obtener la URL pública del servicio, aunque aparece una advertencia indicando que, al usar Docker en Windows, la terminal debe permanecer abierta para que el servicio expuesto funcione correctamente.
+
+### Paso 5
+
+<img width="940" height="609" alt="image" src="https://github.com/user-attachments/assets/ef495f9f-8e79-4ddc-adb1-bb27e26f877d" />
+
+La imagen muestra los logs del contenedor que ejecuta Minikube dentro de Docker Desktop, donde se observa el arranque de varios servicios esenciales como Podman, el contenedor del runtime, la API de Podman y el motor de Docker Application Container Engine. También se ve cómo Minikube completa su proceso de inicialización, habilita servicios de seguridad y llega a los objetivos del sistema necesarios para ejecutar contenedores, confirmando que el entorno está funcionando correctamente dentro del clúster local.
 
 
 
