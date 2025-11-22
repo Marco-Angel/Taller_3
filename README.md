@@ -1,4 +1,175 @@
 # Taller_3
+<img width="1012" height="672" alt="imagen" src="https://github.com/user-attachments/assets/b5287294-8e93-434c-81cd-eb896c81aef1" />
+
+'''
+import tensorflow as tf
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras import layers, models
+
+# ----------------------------
+# RUTA DEL DATASET
+# ----------------------------
+DATASET_PATH = "/home/juan-pablo-pedraza/proyecto_segmentacion/dataset"
+IMG_SIZE = (224, 224)
+BATCH_SIZE = 16
+EPOCHS = 15
+
+# ----------------------------
+# CARGA DEL DATASET
+# ----------------------------
+train_datagen = ImageDataGenerator(
+    rescale=1/255.0,
+    validation_split=0.2,
+    rotation_range=20,
+    zoom_range=0.2,
+    horizontal_flip=True
+)
+
+train_gen = train_datagen.flow_from_directory(
+    DATASET_PATH,
+    target_size=IMG_SIZE,
+    batch_size=BATCH_SIZE,
+    class_mode="categorical",
+    subset="training"
+)
+
+val_gen = train_datagen.flow_from_directory(
+    DATASET_PATH,
+    target_size=IMG_SIZE,
+    batch_size=BATCH_SIZE,
+    class_mode="categorical",
+    subset="validation"
+)
+
+print("\nCLASES DETECTADAS:")
+print(train_gen.class_indices)  # Debe mostrar: {'osciloscopio':0, 'multimetro':1, 'raspberry_pi':2}
+'''
+<img width="1012" height="672" alt="imagen" src="https://github.com/user-attachments/assets/e8aab11b-6604-4b9a-a551-d713d8ec21ad" />
+
+'''
+import cv2
+import numpy as np
+import tensorflow as tf
+
+# -----------------------------
+# CARGAR MODELO
+# -----------------------------
+MODEL_PATH = "modelo_herramientas.h5"
+model = tf.keras.models.load_model(MODEL_PATH)
+CLASSES = ["osciloscopio", "multimetro", "raspberry_pi"]
+IMG_SIZE = 224
+
+# -----------------------------
+# FUNCIÓN PARA CLASIFICAR FRAME
+# -----------------------------
+def clasificar(frame):
+    img = cv2.resize(frame, (IMG_SIZE, IMG_SIZE))
+    img = img.astype("float32") / 255.0
+    img = np.expand_dims(img, axis=0)
+    
+    pred = model.predict(img, verbose=0)[0]
+    index = np.argmax(pred)
+    confianza = pred[index]
+    
+    return CLASSES[index], confianza
+
+# -----------------------------
+# SEGMENTACIÓN CON AZUL TRANSPARENTE
+# -----------------------------
+def segmentar(frame):
+    # Convertimos a escala de grises
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # Suavizar para eliminar ruido
+    blur = cv2.GaussianBlur(gray, (7, 7), 0)
+    # Umbral para segmentar el objeto principal
+    _, mask = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    # Invertimos si es necesario (queremos el objeto, no el fondo)
+    if np.mean(mask) > 127:
+        mask = cv2.bitwise_not(mask)
+    
+    # Operaciones morfológicas para limpiar la máscara
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+    
+    # Crear capa azul transparente
+    overlay = frame.copy()
+    color_azul = [255, 0, 0]  # BGR: Azul
+    overlay[mask == 255] = color_azul
+    
+    # Mezclar con transparencia (alpha blending)
+    alpha = 0.4  # 40% de transparencia (ajusta entre 0.0 y 1.0)
+    resultado = cv2.addWeighted(frame, 1, overlay, alpha, 0)
+    
+    # Opcional: Dibujar contorno del objeto
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    cv2.drawContours(resultado, contours, -1, (255, 0, 0), 2)  # Contorno azul
+    
+    return resultado
+
+# -----------------------------
+# CAPTURA DE CÁMARA
+# -----------------------------
+# Nombre de ventana constante
+WINDOW_NAME = "Detección de Herramientas"
+
+# Crear la ventana UNA SOLA VEZ antes del bucle
+cv2.namedWindow(WINDOW_NAME, cv2.WINDOW_NORMAL)
+
+cap = cv2.VideoCapture(0)
+if not cap.isOpened():
+    print("No se pudo acceder a la cámara.")
+    exit()
+
+print("Presiona 'q' para salir.")
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        print("Error al leer frame")
+        break
+    
+    # Clasificar
+    clase, conf = clasificar(frame)
+    
+    # Segmentar con azul transparente
+    frame_seg = segmentar(frame)
+    
+    # Mostrar SOLO el nombre del objeto detectado (en minúsculas)
+    texto = clase.replace('_', ' ')
+    
+    # Agregar fondo semi-transparente al texto para mejor legibilidad
+    (text_width, text_height), baseline = cv2.getTextSize(
+        texto, cv2.FONT_HERSHEY_SIMPLEX, 1.2, 3
+    )
+    cv2.rectangle(frame_seg, (15, 10), (25 + text_width, 50 + baseline), 
+                  (0, 0, 0), -1)  # Fondo negro
+    cv2.rectangle(frame_seg, (15, 10), (25 + text_width, 50 + baseline), 
+                  (255, 0, 0), 2)  # Borde azul
+    
+    # Texto en blanco
+    cv2.putText(frame_seg, texto, (20, 45),
+                cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 255, 255), 3)
+    
+    # Mostrar en la MISMA ventana
+    cv2.imshow(WINDOW_NAME, frame_seg)
+    
+    # Verificar si se presionó 'q' O si se cerró la ventana
+    key = cv2.waitKey(1) & 0xFF
+    if key == ord("q"):
+        break
+    
+    # Verificar si la ventana fue cerrada con la X
+    if cv2.getWindowProperty(WINDOW_NAME, cv2.WND_PROP_VISIBLE) < 1:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+
+# Asegurar que todas las ventanas se cierren
+cv2.waitKey(1)
+'''
+<img width="628" height="472" alt="imagen" src="https://github.com/user-attachments/assets/ec051017-f3f4-4e6b-b3b4-4035904196b7" />
 
 ---
 ## Punto 3
