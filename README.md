@@ -1,7 +1,8 @@
 # Taller_3
+
 <img width="1012" height="672" alt="imagen" src="https://github.com/user-attachments/assets/b5287294-8e93-434c-81cd-eb896c81aef1" />
 
-'''
+'''bash
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import layers, models
@@ -44,6 +45,7 @@ val_gen = train_datagen.flow_from_directory(
 print("\nCLASES DETECTADAS:")
 print(train_gen.class_indices)  # Debe mostrar: {'osciloscopio':0, 'multimetro':1, 'raspberry_pi':2}
 '''
+
 <img width="1012" height="672" alt="imagen" src="https://github.com/user-attachments/assets/e8aab11b-6604-4b9a-a551-d713d8ec21ad" />
 
 '''
@@ -169,6 +171,7 @@ cv2.destroyAllWindows()
 # Asegurar que todas las ventanas se cierren
 cv2.waitKey(1)
 '''
+
 <img width="628" height="472" alt="imagen" src="https://github.com/user-attachments/assets/ec051017-f3f4-4e6b-b3b4-4035904196b7" />
 
 ---
