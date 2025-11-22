@@ -264,7 +264,7 @@ En la siguiente imagen se evidencia la creacion de tres archivos donde a cada un
 
 <img width="770" height="122" alt="image" src="https://github.com/user-attachments/assets/1d7c3062-110b-4cf4-9605-7844ba6f47f7" />
 
-En esta imagen se evidencia la version de el node y de npm, cabe recalcar que si no se tiene **Node.Js** para visual studio code se debe buscar y descargar la version **LTS** se debe crear una nueva variable desde el dipositivo y pponer la de el node.js, como consiguiente se debe ir al termminal de el visual studio code y se debe installar con el comando queserequiere. Para el NPM se instala con el comando **npm install** debe tenerse encuenta que el node debe estar isntalado para que permita hacer la instalación.
+En esta imagen se evidencia la version de el node y de npm, cabe recalcar que si no se tiene **Node.Js** para visual studio code se debe buscar y descargar la version **LTS** se debe crear una nueva variable desde el dipositivo y pponer la de el node.js, como consiguiente se debe ir al termminal de el visual studio code y se debe installar con el comando que se requiere. Para el NPM se instala con el comando **npm install** debe tenerse encuenta que el node debe estar isntalado para que permita hacer la instalación del NPM.
 
 ### Paso 3
 <img width="1199" height="648" alt="image" src="https://github.com/user-attachments/assets/60bf55b1-1ffc-4fc6-9469-1cc8d7f24d2a" />
