@@ -1,8 +1,11 @@
 # Taller_3
+Para el desarrollo del sistema se configuró un entorno basado en Python dentro de una Raspberry Pi, aprovechando su capacidad para manejar procesamiento en tiempo real con una cámara conectada. Se instalaron las librerías esenciales como OpenCV, TensorFlow y NumPy, asegurando compatibilidad con la arquitectura ARM. Además, se organizó un dataset propio ubicado en la ruta /home/juan-pablo-pedraza/proyecto_segmentacion/dataset, el cual contiene las tres clases de interés: osciloscopio, multímetro y Raspberry Pi. Este entorno proporcionó la base necesaria para realizar tanto el entrenamiento del modelo como la implementación del algoritmo de segmentación en tiempo real sin saturar el sistema.
 
 <img width="1012" height="672" alt="imagen" src="https://github.com/user-attachments/assets/b5287294-8e93-434c-81cd-eb896c81aef1" />
 
-'''bash
+Para el entrenamiento se construyó un modelo de visión por computadora adaptado específicamente a las tres clases del dataset. El proceso incluyó la carga automática de las imágenes etiquetadas, su escalado, normalización y división entre entrenamiento y validación. Se utilizó una red convolucional liviana diseñada para funcionar eficientemente en la Raspberry Pi, permitiendo un equilibrio entre precisión y rendimiento. El modelo fue entrenado mediante aprendizaje supervisado, ajustando sus parámetros a través de múltiples épocas hasta lograr identificar y clasificar correctamente las tres categorías de dispositivos electrónicos.
+
+´´´
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import layers, models
@@ -44,11 +47,15 @@ val_gen = train_datagen.flow_from_directory(
 
 print("\nCLASES DETECTADAS:")
 print(train_gen.class_indices)  # Debe mostrar: {'osciloscopio':0, 'multimetro':1, 'raspberry_pi':2}
-'''
+´´´
+
+Se integró un proceso de segmentación en color utilizando un enmascaramiento azul en espacio HSV, con el fin de resaltar y aislar los objetos presentes en la escena. Este paso permitió que el modelo se enfoque únicamente en las regiones relevantes, mejorando la fiabilidad de la clasificación. La máscara se aplicó sobre cada frame proveniente de la cámara, limpiando ruido a través de operaciones morfológicas y resaltando contornos. Esto contribuyó a un procesamiento mucho más estable, reduciendo falsos positivos y facilitando que el algoritmo identifique correctamente los dispositivos dentro del área segmentada.
 
 <img width="1012" height="672" alt="imagen" src="https://github.com/user-attachments/assets/e8aab11b-6604-4b9a-a551-d713d8ec21ad" />
 
-'''
+El código desarrollado integra en un solo flujo la captura de video, segmentación azul, preprocesamiento de la imagen y predicción del modelo entrenado. Se implementaron técnicas para evitar la apertura repetitiva de ventanas y asegurar que todo el procesamiento ocurra en una única visualización continua. Cada frame capturado se procesa de forma eficiente, sin recargar el sistema, mostrando en pantalla tanto la máscara generada como la predicción del modelo. Este diseño evita saturación de memoria y permite un funcionamiento sostenido en la Raspberry Pi.
+
+´´´
 import cv2
 import numpy as np
 import tensorflow as tf
@@ -170,7 +177,9 @@ cv2.destroyAllWindows()
 
 # Asegurar que todas las ventanas se cierren
 cv2.waitKey(1)
-'''
+´´
+
+El sistema resultante permite identificar en tiempo real dispositivos como un osciloscopio, un multímetro y una Raspberry Pi dentro de una escena capturada por cámara. Mediante la combinación de segmentación por color y un modelo CNN entrenado con un dataset propio, se logró una solución precisa, ligera y adaptable a entornos educativos o industriales. El proyecto demuestra cómo la visión artificial puede integrarse de forma práctica en hardware de bajo consumo, permitiendo construir herramientas de clasificación visual accesibles y eficientes.
 
 <img width="628" height="472" alt="imagen" src="https://github.com/user-attachments/assets/ec051017-f3f4-4e6b-b3b4-4035904196b7" />
 
